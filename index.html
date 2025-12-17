@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>For Silo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Playfair+Display&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #1a2c6b, #2d3a8f); /* dark blue */
+      font-family: 'Quicksand', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: #f0f8ff;
+    }
+
+    .card {
+      background: #f9f9ff;
+      border-radius: 20px;
+      padding: 36px 32px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.15);
+      animation: fadeIn 0.8s ease;
+      text-align: center;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-weight: normal;
+      margin-bottom: 14px;
+      color: #f0f8ff;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 1rem;
+      margin-bottom: 14px;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    input {
+      text-align: center;
+      letter-spacing: 6px;
+      border: 2px solid #b2d1f0;
+    }
+
+    button {
+      border: none;
+      background: #4a63a0;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #3a4f86;
+    }
+
+    .error {
+      color: #f08080;
+      margin-top: 10px;
+      display: none;
+    }
+
+    .message {
+      display: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card" id="lock">
+    <h1>Enter the Secret Code</h1>
+    <p>This message is just for you, Silo 💙</p>
+    <input type="password" id="code" maxlength="6" placeholder="••••••">
+    <button onclick="unlock()">Enter</button>
+    <div class="error" id="errorText"></div>
+  </div>
+
+  <div class="card message" id="message">
+    <!-- Message will be added later -->
+  </div>
+
+  <script>
+    const correctCode = "251225"; // Normal unlock
+    const cheatCode = "567899";   // Cheat bypass
+
+    const fakeErrors = [
+      "Oops, try again 💙",
+      "Not yet 😉",
+      "Almost, but not quite 😅",
+      "Keep trying, you got this 💌"
+    ];
+
+    function unlock() {
+      const input = document.getElementById("code").value;
+      const errorText = document.getElementById("errorText");
+
+      if(input === cheatCode){
+        document.getElementById("lock").style.display = "none";
+        document.getElementById("message").style.display = "block";
+        return;
+      }
+
+      const today = new Date();
+      const month = today.getMonth(); // Dec = 11
+      const day = today.getDate();
+
+      if(month === 11 && day <= 24 && input === correctCode){
+        errorText.textContent = "Not yet! Wait for Christmas day 🎄";
+        errorText.style.display = "block";
+        return;
+      }
+
+      if(input === correctCode){
+        document.getElementById("lock").style.display = "none";
+        document.getElementById("message").style.display = "block";
+      } else {
+        errorText.textContent = fakeErrors[Math.floor(Math.random() * fakeErrors.length)];
+        errorText.style.display = "block";
+      }
+    }
+  </script>
+
+</body>
+</html>
